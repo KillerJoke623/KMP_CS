@@ -21,18 +21,35 @@ namespace WindowsFormsApp1
             
         }
         
-        public string hayStr;
         public CFG cfg = new CFG();
         
         
         private void needleBox_TextChanged(object sender, EventArgs e)
         {
-            resultBox.Text = "";
-            
             if(needleBox.Text.Length==0)
                 return;
+            if (haystackBox.Text.Length!=0)
+            {
+                linkCFG();
+            }
             
-            cfg.KMPSearch(needleBox.Text, hayStr);
+        }
+
+        private void haystackBox_TextChanged(object sender, EventArgs e)
+        {
+            if(haystackBox.Text.Length==0)
+                return;
+            
+            if (needleBox.Text.Length!=0)
+            {
+                linkCFG();
+            }
+        }
+
+        private void linkCFG()
+        {
+            resultBox.Text = "";
+            cfg.KMPSearch(needleBox.Text, haystackBox.Text);
             
             List<int> result = cfg.A;
             foreach (var item in result)
@@ -41,12 +58,6 @@ namespace WindowsFormsApp1
             }
             
             cfg.A.Clear();
-            
-        }
-
-        private void haystackBox_TextChanged(object sender, EventArgs e)
-        {
-            hayStr = haystackBox.Text;
         }
     }
 }
